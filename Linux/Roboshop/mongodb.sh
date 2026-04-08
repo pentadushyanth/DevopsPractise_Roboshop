@@ -1,7 +1,7 @@
 #! /bin/bash  #Ensures the script runs with the correct shell
 
 mkdir -p /var/log
-logfile= "/var/log/logfile.log"
+logfile="/var/log/logfile.log"
 Validate() {
 if [ $? -eq 0 ]
 then 
