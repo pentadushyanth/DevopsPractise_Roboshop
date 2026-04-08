@@ -1,6 +1,6 @@
 #! /bin/bash  #Ensures the script runs with the correct shell
 
-var logfile= "/home/var/logfile.log"
+logfile= "/home/var/logfile.log"
 Validate() {
 if [ $? -eq 0 ]
 then 
