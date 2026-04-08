@@ -13,15 +13,15 @@ else
 fi
 }
 cp mongo.repo /etc/yum.repos.d/mongo.repo >> $logfile
-Validate 
+Validate $?
 
 dnf install mongodb-org -y >> $logfile
-Validate
+Validate $?
 systemctl enable mongod 
-Validate
+Validate $?
 systemctl start mongod 
-Validate
+Validate $?
 sed 's/127.0.0.1 /0.0.0.0 /g' /etc/mongod.conf
-Validate
+Validate $?
 
 systemctl restart mongod
