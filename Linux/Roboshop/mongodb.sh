@@ -10,7 +10,6 @@ else
     echo "failed" 
     exit 1
 }
-sudo su
 cp mongo.repo /etc/yum.repos.d/mongo.repo >> $logfile
 Validate 
 
@@ -20,6 +19,7 @@ systemctl enable mongod
 Validate
 systemctl start mongod 
 Validate
-vi /etc/mongod.conf
-sed s/127.0.0.1 /0.0.0.0 /g mongod.conf
+sed 's/127.0.0.1 /0.0.0.0 /g' /etc/mongod.conf
+Validate
+
 systemctl restart mongod
