@@ -3,7 +3,7 @@
 mkdir -p /var/log
 logfile="/var/log/logfile.log"
 Validate() {
-if [ $1 -eq 0 ]
+if [ $1 -eq 0 ];
 then 
     echo "$2 is success"
 else
@@ -12,7 +12,7 @@ else
 fi
 }
 cp mongo.repo /etc/yum.repos.d/mongo.repo >> $logfile
-Validate $?
+Validate $? "Copying mongodb"
 
 dnf install mongodb-org -y >> $logfile
 Validate $? "mongodb installation"
