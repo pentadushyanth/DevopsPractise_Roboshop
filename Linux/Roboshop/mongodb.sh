@@ -3,7 +3,7 @@
 mkdir -p /var/log
 logfile="/var/log/logfile.log"
 Validate() {
-if [ $? -eq 0 ]
+if [ $1 -eq 0 ]
 then 
     echo "success"
     exit 0
