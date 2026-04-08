@@ -6,7 +6,6 @@ Validate() {
 if [ $1 -eq 0 ]
 then 
     echo "success"
-    exit 0
 else
     echo "failed" 
     exit 1
