@@ -1,6 +1,7 @@
 #! /bin/bash  #Ensures the script runs with the correct shell
 
-logfile= "/home/var/logfile.log"
+mkdir -p /var/log
+logfile= "/var/log/logfile.log"
 Validate() {
 if [ $? -eq 0 ]
 then 
@@ -9,6 +10,7 @@ then
 else
     echo "failed" 
     exit 1
+fi
 }
 cp mongo.repo /etc/yum.repos.d/mongo.repo >> $logfile
 Validate 
