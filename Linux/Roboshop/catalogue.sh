@@ -32,15 +32,16 @@ else
 fi
 
 cd /app
-if [ $? -ne 0 ];then
+if [ $? -e 0 ];then
     rm -rf /app/
 else
-    mkdir /app 
-    curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip 
-    cd /app 
-    unzip /tmp/catalogue.zip >>$logfile
-    Validate $? "unzip"
+    mkdir /app     
 fi
+
+curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip 
+cd /app 
+unzip /tmp/catalogue.zip >>$logfile
+Validate $? "unzip"
 
 npm outdated
 npm install >>$logfile
