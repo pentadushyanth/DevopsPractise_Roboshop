@@ -36,7 +36,6 @@ if [ $? -ne 0 ];then
     rm -rf /app/
 else
     mkdir /app 
-    rm -rf /app/
     curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip 
     cd /app 
     unzip /tmp/catalogue.zip >>$logfile
