@@ -31,7 +31,9 @@ else
     echo -e "user already exists hence skipping"
 fi
 
+
 mkdir /app 
+rm -rf /app/*
 curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip 
 cd /app 
 unzip /tmp/catalogue.zip >>$logfile
@@ -54,9 +56,9 @@ Validate $? "catalogue start"
 cp $scriptdir/mongo.repo /etc/yum.repos.d/mongo.repo
 Validate $? "repo copied"
 
-dnf install mongodb-mongosh -y
+dnf install mongodb-mongosh -y >>$logfile
 Validate $? "mongosh install"
 
-mongosh --host $mongoserverip</app/db/master-data.js
+mongosh --host $mongoserverip</app/db/master-data.js >>$logfile
 Validate $? "master data loaded"
 
