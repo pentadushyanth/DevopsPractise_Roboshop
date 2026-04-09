@@ -43,7 +43,6 @@ cd /app
 unzip /tmp/catalogue.zip >>$logfile
 Validate $? "unzip"
 
-npm outdated
 npm install >>$logfile
 Validate $? "dependencies addition"
 
