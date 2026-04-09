@@ -33,6 +33,7 @@ Validate $? "unzip"
 npm install >>$logfile
 Validate $? "dependencies addition"
 
+PWD
 cp /catalogue.service  /etc/systemd/system >>$logfile
 
 systemctl daemon-reload
