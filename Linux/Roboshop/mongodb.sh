@@ -16,7 +16,7 @@ Validate $? "Copying mongodb"
 
 dnf install mongodb-org -y >> $logfile
 Validate $? "mongodb installation"
-systemctl enable mongod 
+systemctl enable mongod --no-pager --quiet # no pager will remove the green colour for enabled in status message"
 Validate $? "enabled mongodb"
 systemctl start mongod 
 Validate $? "started mongodb"
