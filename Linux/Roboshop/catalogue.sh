@@ -2,6 +2,7 @@
 
 mkdir -p /var/log
 logfile="/var/log/logfile.log"
+scriptdir=$PWD
 Validate() {
 if [ $1 -eq 0 ];
 then 
@@ -40,7 +41,7 @@ Validate $? "dependencies addition"
 
 
 
-cp pwd/catalogue.service  /etc/systemd/system/catalogue.service >>$logfile
+cp $scriptdir/catalogue.service  /etc/systemd/system/catalogue.service >>$logfile
 
 systemctl daemon-reload
 
