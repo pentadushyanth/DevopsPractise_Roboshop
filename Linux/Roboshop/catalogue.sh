@@ -24,7 +24,7 @@ dnf install nodejs -y >>$logfile
 Validate $? "nodejs installation"
 
 id roboshop
-if [ $? -ne 0];then
+if [ $? -ne 0 ];then
     useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop >>$logfile
     Validate $? "user added"
 else
@@ -39,6 +39,7 @@ cd /app
 unzip /tmp/catalogue.zip >>$logfile
 Validate $? "unzip"
 
+npm update
 npm install >>$logfile
 Validate $? "dependencies addition"
 
