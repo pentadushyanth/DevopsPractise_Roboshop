@@ -32,8 +32,8 @@ else
 fi
 
 cd /app
-if [ $? -e 0 ];then
-    rm -rf /app/
+if [ $? -eq 0 ];then
+    rm -rf /app/*
 else
     mkdir /app     
 fi
