@@ -3,6 +3,7 @@
 mkdir -p /var/log
 logfile="/var/log/logfile.log"
 scriptdir=$PWD
+mongoserverip=mongodb.practisedevops.shop
 Validate() {
 if [ $1 -eq 0 ];
 then 
@@ -49,4 +50,13 @@ systemctl enable catalogue
 Validate $? "catalogue enable"
 systemctl start catalogue >>$logfile
 Validate $? "catalogue start"
+
+cp $scriptdir/mongo.repo /etc/yum.repos.d/mongo.repo
+Validate $? "repo copied"
+
+dnf install mongodb-mongosh -y
+Validate $? "mongosh install"
+
+mongosh --host $mongoserverip</app/db/master-data.js
+Validate $? "master data loaded"
 
