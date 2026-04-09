@@ -31,15 +31,19 @@ else
     echo -e "user already exists hence skipping"
 fi
 
+cd /app
+if [ $? -ne 0 ];then
+    rm -rf /app/
+else
+    mkdir /app 
+    rm -rf /app/
+    curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip 
+    cd /app 
+    unzip /tmp/catalogue.zip >>$logfile
+    Validate $? "unzip"
+fi
 
-mkdir /app 
-rm -rf /app/*
-curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip 
-cd /app 
-unzip /tmp/catalogue.zip >>$logfile
-Validate $? "unzip"
-
-npm update
+npm outdated
 npm install >>$logfile
 Validate $? "dependencies addition"
 
