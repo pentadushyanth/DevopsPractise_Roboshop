@@ -21,8 +21,13 @@ Validate $? "nodejs enable"
 dnf install nodejs -y >>$logfile
 Validate $? "nodejs installation"
 
-useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop >>$logfile
-Validate $? "user added"
+id roboshop
+if [ $? -ne 0];then
+    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop >>$logfile
+    Validate $? "user added"
+else
+    echo -e "user already exists hence skipping"
+fi
 
 mkdir /app 
 curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip 
