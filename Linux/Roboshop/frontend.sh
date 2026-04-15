@@ -23,12 +23,17 @@ Validate $? "nginx enable"
 dnf install nginx -y >>$logfile
 Validate $? "nginx installation"
 
+systemctl enable nginx >>$logfile
+Validate $? "nginx enable"
+systemctl start nginx >>$logfile
+Validate $? "nginx start"
+
 rm -rf /usr/share/nginx/html/* 
 Validate $? "content removed"
 
 curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend-v3.zip
 cd /usr/share/nginx/html 
-unzip /tmp/frontend.zip
+unzip /tmp/frontend.zip >>$logfile
 Validate $? "unzip success"
 
 cp $scriptdir/nginx.conf  /etc/nginx/nginx.conf >>$logfile
