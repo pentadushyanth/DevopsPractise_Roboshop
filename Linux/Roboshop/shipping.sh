@@ -39,15 +39,15 @@ unzip /tmp/shipping.zip >>$logfile
 Validate $? "unzip"
 
 cd /app 
-mvn clean package 
-mv target/shipping-1.0.jar shipping.jar 
+mvn clean package  >>$logfile
+mv target/shipping-1.0.jar shipping.jar >>$logfile
 
 
 cp $scriptdir/shipping.service  /etc/systemd/system/shipping.service >>$logfile
 
 systemctl daemon-reload
 
-systemctl enable shipping 
+systemctl enable shipping >>$logfile
 Validate $? "shipping enable"
 systemctl start shipping >>$logfile
 Validate $? "shipping start"

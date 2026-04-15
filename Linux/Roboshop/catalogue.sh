@@ -66,3 +66,6 @@ Validate $? "mongosh install"
 mongosh --host $mongoserverip </app/db/master-data.js >>$logfile
 Validate $? "master data loaded"
 
+mongosh --host $mongoserverip
+
+show dbs
