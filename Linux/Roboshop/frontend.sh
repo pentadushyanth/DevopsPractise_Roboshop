@@ -21,7 +21,7 @@ dnf module enable nginx:1.24 -y >>$logfile
 Validate $? "nginx enable"
 
 rm -rf /etc/nginx/nginx.conf/* &>>$logfile
-VALIDATE $? "removed nginx content"
+Validate $? "removed nginx content"
 
 
 dnf install nginx -y >>$logfile
