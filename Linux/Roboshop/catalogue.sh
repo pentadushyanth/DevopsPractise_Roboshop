@@ -63,6 +63,6 @@ Validate $? "repo copied"
 dnf install mongodb-mongosh -y >>$logfile
 Validate $? "mongosh install"
 
-mongosh --host $mongoserverip</app/db/master-data.js >>$logfile
+mongosh --host $mongoserverip </app/db/master-data.js >>$logfile
 Validate $? "master data loaded"
 

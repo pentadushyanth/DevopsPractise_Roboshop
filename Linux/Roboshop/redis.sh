@@ -12,19 +12,19 @@ else
 fi
 }
 
-dnf module disable redis -y
+dnf module disable redis -y >>$logfile
 Validate $? "disable redis"
-dnf module enable redis:7 -y
+dnf module enable redis:7 -y >>$logfile
 Validate $? "enable redis"
 
-dnf install redis -y 
+dnf install redis -y >>$logfile
 Validate $? "redis install"
 
-sed -i 's/127.0.0.1 /0.0.0.0 /g' /etc/redis/redis.conf
+sed -i 's/127.0.0.1 /0.0.0.0 /g' /etc/redis/redis.conf >>$logfile
 
-sed -i 's/^protected-mode yes/protected-mode no/' /etc/redis/redis.conf
+sed -i 's/^protected-mode yes/protected-mode no/' /etc/redis/redis.conf >>$logfile
 
-systemctl enable redis
+systemctl enable redis >>$logfile
 Validate $? "enable redis"
-systemctl start redis 
+systemctl start redis >>$logfile
 Validate $? "start redis"
