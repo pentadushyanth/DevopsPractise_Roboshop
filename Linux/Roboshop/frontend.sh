@@ -17,10 +17,6 @@ fi
 dnf module disable nginx -y >>$logfile
 Validate $? "nginx disable"
 
-
-rm -rf /etc/nginx/nginx.conf/* &>>$logfile
-Validate $? "removed nginx content"
-
 dnf module enable nginx:1.24 -y >>$logfile
 Validate $? "nginx enable"
 
