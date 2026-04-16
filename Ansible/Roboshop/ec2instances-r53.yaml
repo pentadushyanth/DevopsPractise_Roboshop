@@ -17,8 +17,8 @@
       image_id: "{{ ami_id }}"
       tags:
         Name: "{{ item }}"
-      loops: "{{ instances }}"
-      register: ec2_output
+    loops: "{{ instances }}"
+    register: ec2_output
   - name: Display instance details
     ansible.builtin.debug:
      msg: "{{ ec2_output }}"
