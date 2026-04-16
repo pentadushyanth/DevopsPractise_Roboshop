@@ -26,7 +26,7 @@
       amazon.aws.route53:
         state: present
         zone: "{{ zone_id }}"
-        record: "{{ item.domain_name }}"
+        record: "{{ item }}.{{ domain_name }}"
         type: A
         ttl: 300
         value: "{{ ec2_output.instances.private_ip_address }}"
