@@ -1,5 +1,5 @@
 - name: ec2-instances creation 
-  hosts: local
+  hosts: localhost
   connection: local
   vars:
     ami_id: ami-0220d79f3f480ecf5
