@@ -26,12 +26,11 @@
     - name: Add a r53 record 
       amazon.aws.route53:
         state: present
-        hosted_zone_id: "{{ zone_id }}"
+        zone: "{{ domain_name }}"
         record: "{{ item.item }}.{{ domain_name }}"
         type: A
-        ttl: 300
-        records:
-          - "{{ item.instances[0].private_ip_address }}"
+        ttl: 1
+        value: "{{ item.instances[0].private_ip_address }}"
       loop: "{{ ec2_output.results }}"
         
           
