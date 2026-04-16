@@ -1,0 +1,26 @@
+- name: ec2-instances creation 
+  hosts: local
+  connection: local
+  vars:
+    ami_id: ami-0220d79f3f480ecf5
+    sg_id: sg-04da36c125d32be89
+    zone_id: "Z082277119F6MYLF9ANO8"
+    domain_name: practisedevops.shop
+    instances:
+    - mongodb
+  tasks:
+    - name: create ec2-instance
+      amazon.aws.ec2_instance:
+        name: "{{ item }}"
+        instance_type: t3.micro
+        security_group: "{{ sg_id }}"
+        image_id: "{{ ami_id }}"
+        tags:
+          Name: "{{ item }}"
+      loops: "{{ instances }}"
+      register: ec2_output
+    - name: Display instance details
+      ansible.builtin.debug:
+       msg: "{{ ec2_output }}"
+      
+          

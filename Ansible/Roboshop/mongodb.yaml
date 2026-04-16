@@ -1,0 +1,7 @@
+- name: mongodb server
+  hosts:
+  -  name: Install mongodb
+     ansible.builtin.package:
+      name: mongodb
+      state: install
+  
