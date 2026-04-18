@@ -5,9 +5,7 @@
   - name: Disable the Node.js DNF module
     ansible.builtin.command: dnf module disable nodejs -y
   - name: enable the Node.js DNF module
-    ansible.builtin.dnf:
-      name: "nodejs:20"
-      state: enabled
+    ansible.builtin.command: dnf module enable nodejs:20 -y
   - name: install the Node.js DNF module
     ansible.builtin.dnf:
       name: "nodejs"
