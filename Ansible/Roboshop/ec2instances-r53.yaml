@@ -16,7 +16,7 @@
         instance_type: t3.micro
         security_group: "{{ sg_id }}"
         image_id: "{{ ami_id }}"
-        wait : true
+        wait : true  #aws will wait until the instances are created completely and then move to next task
         tags:
           Name: "{{ item }}"
       loop: "{{ instances }}"
@@ -24,11 +24,6 @@
     - name: Display instance details
       ansible.builtin.debug:
         msg: "{{ ec2_output }}"
-    - name: Show each result clearly
-      debug:
-        msg: "Instance {{ item.item }} => {{ item }}"
-      loop: "{{ ec2_output.results }}"
-
     - name: Add a r53 record 
       amazon.aws.route53:
         state: present

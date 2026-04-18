@@ -19,4 +19,45 @@
       name: roboshop
       system: true
       shell: /sbin/nologin
+  - name: Creates directory
+    ansible.builtin.file:
+      path: /app
+      state: directory
+  - name: Download zip file 
+    ansible.builtin.unarchive:
+      url: /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip 
+      dest: app/tmp/catalogue.zip
+  - name: Install dependencies
+    ansible.builtin.package:
+      name: npm
+      dest: /app
+      state: installed
+  - name: Copy catalogue service
+    ansible.builtin.copy:
+      src: catalogue.service
+      dest: /etc/systemd/system/catalogue.service
+  - name: reload the daemon
+    ansible.builtin.systemd_service:
+      daemon_reload: true
+      name: catalogue
+  - name: start and Enable mongodb
+    ansible.builtin.service:
+      name: catalogue
+      enabled: yes
+  - name: Copy mongodb repo
+    ansible.builtin.copy:
+      src: mongodb.repo
+      dest: /etc/yum.repos.d/mongo.repo
+  - name: Install mongodb 
+    ansible.builtin.package:
+      name: mongodb-mongosh
+      state: installed
+  - name: load master data
+    ansible.builtin.command: mongosh --host mongodb.practisedevops.shop </app/db/master-data.js
+    
+     
+  
+
+
+
   
