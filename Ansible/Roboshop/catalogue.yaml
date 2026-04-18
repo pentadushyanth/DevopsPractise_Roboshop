@@ -22,7 +22,8 @@
   - name: Download zip file 
     ansible.builtin.unarchive:
       url: /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip 
-      dest: app/tmp/catalogue.zip
+      src: /tmp/catalogue.zip
+      dest: /app
   - name: Install dependencies
     ansible.builtin.package:
       name: npm
