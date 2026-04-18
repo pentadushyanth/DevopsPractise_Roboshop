@@ -3,9 +3,7 @@
   become: yes
   tasks:
   - name: Disable the Node.js DNF module
-    ansible.builtin.dnf:
-      name: "nodejs"
-      state: disabled
+    ansible.builtin.command: dnf module disable nodejs -y
   - name: enable the Node.js DNF module
     ansible.builtin.dnf:
       name: "nodejs:20"
@@ -54,7 +52,7 @@
       state: installed
   - name: load master data
     ansible.builtin.command: mongosh --host mongodb.practisedevops.shop </app/db/master-data.js
-    
+
      
   
 
