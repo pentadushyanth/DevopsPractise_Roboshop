@@ -51,41 +51,97 @@
       enabled: yes
   - name: Check if schema tables exist
     community.mysql.mysql_query:
-      login_host: "{{ mysql }}"
-      login_user: root
-      login_password: RoboShop@1
-      login_db: roboshop
-      query: "SHOW TABLES LIKE 'users';"
-    register: schema_check 
+        login_host: "{{ mysql }}"
+        login_user: root
+        login_password: RoboShop@1
+        login_db: roboshop
+        query: "SHOW TABLES LIKE 'users';"
+    register: schema_check
+
   - name: Import schema
     community.mysql.mysql_db:
-      login_host: "{{ mysql }}"
-      login_user: root
-      login_password: RoboShop@1
-      name: roboshop
-      state: import
-      target: /app/db/schema.sql
-    when: schema_check.query_result[0] | length == 0  
+        login_host: "{{ mysql }}"
+        login_user: root
+        login_password: RoboShop@1
+        name: roboshop
+        state: import
+        target: /app/db/schema.sql
+    when: schema_check.query_result[0] | length == 0
+
   - name: Check if app user exists
     community.mysql.mysql_query:
-      login_host: "{{ mysql }}"
-      login_user: root
-      login_password: RoboShop@1
-      query: "SELECT User FROM mysql.user WHERE User='app_user';"
+        login_host: "{{ mysql }}"
+        login_user: root
+        login_password: RoboShop@1
+        query: "SELECT User FROM mysql.user WHERE User='app_user';"
     register: user_check
-  - name: Run app-user.sql if user not present
-    ansible.builtin.shell: mysql -h {{ mysql }} -uroot -pRoboShop@1 < /app/db/app-user.sql
+
+  - name: Import app user
+    community.mysql.mysql_db:
+        login_host: "{{ mysql }}"
+        login_user: root
+        login_password: RoboShop@1
+        name: roboshop
+        state: import
+        target: /app/db/app-user.sql
     when: user_check.query_result[0] | length == 0
-  - name: Check if master data exists
+
+  - name: Check master data
     community.mysql.mysql_query:
-      login_host: "{{ mysql }}"
-      login_user: root
-      login_password: RoboShop@1
-      query: "SELECT COUNT(*) AS count FROM users;"
+        login_host: "{{ mysql }}"
+        login_user: root
+        login_password: RoboShop@1
+        login_db: roboshop
+        query: "SELECT COUNT(*) AS count FROM users;"
     register: master_data_check
+
   - name: Load master data
-    ansible.builtin.shell: mysql -h {{ mysql }} -uroot -pRoboShop@1 < /app/db/master-data.sql
-    when: master_data_check.query_result[0][0].count == 0
+    community.mysql.mysql_db:
+        login_host: "{{ mysql }}"
+        login_user: root
+        login_password: RoboShop@1
+        name: roboshop
+        state: import
+        target: /app/db/master-data.sql
+    when: master_da
+  
+  # - name: Check if schema tables exist
+  #   community.mysql.mysql_query:
+  #     login_host: "{{ mysql }}"
+  #     login_user: root
+  #     login_password: RoboShop@1
+  #     login_db: roboshop
+  #     query: "SHOW TABLES LIKE 'users';"
+  #   register: schema_check 
+  # - name: Import schema
+  #   community.mysql.mysql_db:
+  #     login_host: "{{ mysql }}"
+  #     login_user: root
+  #     login_password: RoboShop@1
+  #     name: roboshop
+  #     state: import
+  #     target: /app/db/schema.sql
+  #   when: schema_check.query_result[0] | length == 0  
+  # - name: Check if app user exists
+  #   community.mysql.mysql_query:
+  #     login_host: "{{ mysql }}"
+  #     login_user: root
+  #     login_password: RoboShop@1
+  #     query: "SELECT User FROM mysql.user WHERE User='app_user';"
+  #   register: user_check
+  # - name: Run app-user.sql if user not present
+  #   ansible.builtin.shell: mysql -h {{ mysql }} -uroot -pRoboShop@1 < /app/db/app-user.sql
+  #   when: user_check.query_result[0] | length == 0
+  # - name: Check if master data exists
+  #   community.mysql.mysql_query:
+  #     login_host: "{{ mysql }}"
+  #     login_user: root
+  #     login_password: RoboShop@1
+  #     query: "SELECT COUNT(*) AS count FROM users;"
+  #   register: master_data_check
+  # - name: Load master data
+  #   ansible.builtin.shell: mysql -h {{ mysql }} -uroot -pRoboShop@1 < /app/db/master-data.sql
+  #   when: master_data_check.query_result[0][0].count == 0
   - name: Restart service shipping
     ansible.builtin.service:
       name: shipping
