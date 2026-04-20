@@ -13,6 +13,7 @@
   - name: start and Enable rabbitmq
     ansible.builtin.service:
       name: rabbitmq-server
+      state: started
       enabled: yes
   - name: Add the user roboshop
     community.rabbitmq.rabbitmq_user:
