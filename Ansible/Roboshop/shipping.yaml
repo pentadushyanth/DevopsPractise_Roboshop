@@ -52,14 +52,14 @@
   - name: Check if schema tables exist
     community.mysql.mysql_query:
       login_host: "{{ mysql }}"
-      login_user: root
+      login_user: roboshop
       login_password: RoboShop@1
       query: "SHOW TABLES LIKE 'users';"
     register: schema_check 
   - name: Import schema
     community.mysql.mysql_db:
       login_host: "{{ mysql }}"
-      login_user: root
+      login_user: roboshop
       login_password: RoboShop@1
       name: roboshop
       state: import
@@ -68,7 +68,7 @@
   - name: Check if app user exists
     community.mysql.mysql_query:
       login_host: "{{ mysql }}"
-      login_user: root
+      login_user: roboshop
       login_password: RoboShop@1
       query: "SELECT User FROM mysql.user WHERE User='app_user';"
     register: user_check
@@ -78,7 +78,7 @@
   - name: Check if master data exists
     community.mysql.mysql_query:
       login_host: "{{ mysql }}"
-      login_user: root
+      login_user: roboshop
       login_password: RoboShop@1
       query: "SELECT COUNT(*) AS count FROM users;"
     register: master_data_check
