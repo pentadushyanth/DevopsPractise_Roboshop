@@ -52,23 +52,24 @@
   - name: Check if schema tables exist
     community.mysql.mysql_query:
       login_host: "{{ mysql }}"
-      login_user: roboshop
+      login_user: root
       login_password: RoboShop@1
+      login_db: roboshop
       query: "SHOW TABLES LIKE 'users';"
     register: schema_check 
   - name: Import schema
     community.mysql.mysql_db:
       login_host: "{{ mysql }}"
-      login_user: roboshop
+      login_user: root
       login_password: RoboShop@1
       name: roboshop
       state: import
       target: /app/db/schema.sql
-      when: schema_check.query_result[0] | length == 0  
+    when: schema_check.query_result[0] | length == 0  
   - name: Check if app user exists
     community.mysql.mysql_query:
       login_host: "{{ mysql }}"
-      login_user: roboshop
+      login_user: root
       login_password: RoboShop@1
       query: "SELECT User FROM mysql.user WHERE User='app_user';"
     register: user_check
@@ -78,13 +79,13 @@
   - name: Check if master data exists
     community.mysql.mysql_query:
       login_host: "{{ mysql }}"
-      login_user: roboshop
+      login_user: root
       login_password: RoboShop@1
       query: "SELECT COUNT(*) AS count FROM users;"
     register: master_data_check
   - name: Load master data
     ansible.builtin.shell: mysql -h {{ mysql }} -uroot -pRoboShop@1 < /app/db/master-data.sql
-    when: master_data_check.query_result[0] | length == 0
+    when: master_data_check.query_result[0][0].count == 0
   - name: Restart service shipping
     ansible.builtin.service:
       name: shipping
