@@ -11,7 +11,10 @@
     loop:
     - maven
     - mysql
-    - python3
+  - name: Install PyMySQL
+    ansible.builtin.yum:
+      name: python3-PyMySQL
+      state: present  
   -  name: user addition
      ansible.builtin.user:
       name: roboshop
