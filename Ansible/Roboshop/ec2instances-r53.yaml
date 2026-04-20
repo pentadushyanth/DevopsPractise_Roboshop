@@ -9,6 +9,14 @@
     instances:
     - mongodb
     - catalogue
+    - redis
+    - mysql
+    - rabbitmq
+    - frontend
+    - shipping
+    - payment
+    - cart
+    - user
   tasks:
     - name: create ec2-instance
       amazon.aws.ec2_instance:
@@ -32,6 +40,17 @@
         type: A
         ttl: 1
         value: "{{ item.instances[0].private_ip_address }}"
+        overwrite: true
+      loop: "{{ ec2_output.results }}"
+    - name: Add a r53 record 
+      amazon.aws.route53:
+        state: present
+        zone: "{{ domain_name }}"
+        record: "{{ item.item }}.{{ domain_name }}"
+        type: A
+        ttl: 1
+        when: item.item == "frontend"
+        value: "{{ item.instances[0].public_ip_address }}"
         overwrite: true
       loop: "{{ ec2_output.results }}"
         

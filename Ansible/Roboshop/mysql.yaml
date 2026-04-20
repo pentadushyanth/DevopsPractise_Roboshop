@@ -1,0 +1,15 @@
+- name: mysql server
+  hosts: mysql
+  become: yes
+  tasks:
+  - name: install the mysql
+    ansible.builtin.apt:
+      name: "mysql-server"
+      state: installed
+  - name: start and Enable mongodb
+    ansible.builtin.service:
+      name: mysql
+      enabled: yes
+  - name: change password 
+    ansible.builtin.command: mysql_secure_installation --set-root-pass RoboShop@1
+  

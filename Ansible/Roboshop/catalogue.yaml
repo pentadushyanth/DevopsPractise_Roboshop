@@ -47,10 +47,22 @@
     ansible.builtin.package:
       name: mongodb-mongosh
       state: installed
+  - name: check if products data exists
+    ansible.builtin.shell: mongosh --quiet --host mongodb.practisedevops.shop --eval "db.products.countDocuments()"
+    register: mongo_count
   - name: load master data
     ##ansible.builtin.command: mongosh --host mongodb.practisedevops.shop </app/db/master-data.js
-    ansible.builtin.shell: mongosh --host mongodb.practisedevops.shop < /app/db/master-data.js #This shell is required for redirection
-     
+    ansible.builtin.shell: mongosh --host mongodb.practisedevops.shop < /app/db/master-data.js #This shell is required for 
+    when: mongo_count.stdout | int < 0
+  #  Instead of eval command above we can use this but the below create command for idempotency  
+  # (args:
+  #     creates: /tmp/.data_loaded
+  # - name: mark data as loaded
+  #   file:
+  #     path: /tmp/.data_loaded
+  #     state: touch  )
+
+  
   
 
 
