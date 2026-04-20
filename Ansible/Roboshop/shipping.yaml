@@ -11,6 +11,7 @@
     loop:
     - maven
     - mysql
+    - python3
   -  name: user addition
      ansible.builtin.user:
       name: roboshop
