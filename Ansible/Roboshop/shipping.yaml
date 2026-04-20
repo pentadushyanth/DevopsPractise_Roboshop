@@ -1,6 +1,8 @@
 - name: shipping server
   hosts: shipping
   become: yes
+  vars:
+    mysql: mysql.practisedevops.shop
   tasks:
   - name: Install multiple versions of Maven and MySQL
     ansible.builtin.package:
